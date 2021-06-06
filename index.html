@@ -85,7 +85,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/06/03/%E4%BB%8B%E7%BB%8D/">介绍</a>
+      <a class="p-name article-title" href="/2021/06/03/%E4%BB%8B%E7%BB%8D/">初见浏览器</a>
     </h1>
   
 
@@ -93,11 +93,36 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="雷猴"><a href="#雷猴" class="headerlink" title="雷猴"></a>雷猴</h3>
+        <h2 id=""><a href="#" class="headerlink" title=""></a></h2><p>这次对浏览器的一个学习，主要目的是为了理解JS代码的执行环境，希望能解决关于作用域和词法环境的问题。</p>
+<p>首先了解浏览器的构成。可以通过分析从用户输入url到呈现内容这一行为对浏览器进行拆解。对应<a target="_blank" rel="noopener" href="https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/">此处的分析</a>，可以分为以下几块：</p>
+<ul>
+<li>用户界面。例如菜单栏，滚动条等等，接受用户的输入。</li>
+<li>浏览器引擎。将用户的输入传递给呈现引擎。</li>
+<li><strong>呈现引擎</strong>。通过网络获取资源后，进行解析、构建、布局和绘制。<ul>
+<li>html有专门的解析算法（标记化及树构建），而css则可以用常用的解析方法（词法分析，语法分析）。</li>
+<li><input disabled="" type="checkbox"> 需要了解对应的性能优化方法。</li>
+</ul>
+</li>
+<li><strong>JS解释器</strong>。基本组成包含Call stack和heap memory。执行机制为<strong>事件循环</strong>。<ul>
+<li>运行三部曲：语法分析，预编译，解析执行。</li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6954583720913272863"><strong>预编译</strong></a>。<ul>
+<li>全局预编译：创建global object对象；变量声明；函数声明</li>
+<li>函数预编译：创建activity object对象；形参和变量声明；形参和实参统一；函数声明。</li>
+<li>决定[作用域]。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>UI后端。绘制相关。</li>
+<li>网络。</li>
+<li>数据储存。</li>
+</ul>
+<p>从另一个角度(?)来说, 浏览器的线程包括GUI渲染、JS引擎、事件触发、定时器触发、异步http请求线程。其中GUI渲染和JS互斥，这也是导致阻塞的原因（长时间未进行渲染）。</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/03/%E4%BB%8B%E7%BB%8D/" data-id="ckph2ol0l0000ikw63s6389s5" data-title="介绍" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/03/%E4%BB%8B%E7%BB%8D/" data-id="ckpl9iayi00006gw6dc3mgnnw" data-title="初见浏览器" class="article-share-link">Share</a>
       
       
       
@@ -123,7 +148,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/06/03/hello-world/">Hello World</a>
+      <a class="p-name article-title" href="/2021/06/03/hello-world/">博客搭建</a>
     </h1>
   
 
@@ -131,7 +156,8 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+        <p><a target="_blank" rel="noopener" href="https://vic.kim/2019/05/25/Mac%E4%B8%8B%E4%BD%BF%E7%94%A8Hexo-Github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">https://vic.kim/2019/05/25/Mac%E4%B8%8B%E4%BD%BF%E7%94%A8Hexo-Github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</a></p>
+<p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
@@ -148,7 +174,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/03/hello-world/" data-id="ckph2ol0p0001ikw60cm17h3c" data-title="Hello World" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/03/hello-world/" data-id="ckpl9iaym00016gw64dcs4tnm" data-title="博客搭建" class="article-share-link">Share</a>
       
       
       
@@ -191,11 +217,11 @@
       <ul>
         
           <li>
-            <a href="/2021/06/03/%E4%BB%8B%E7%BB%8D/">介绍</a>
+            <a href="/2021/06/03/%E4%BB%8B%E7%BB%8D/">初见浏览器</a>
           </li>
         
           <li>
-            <a href="/2021/06/03/hello-world/">Hello World</a>
+            <a href="/2021/06/03/hello-world/">博客搭建</a>
           </li>
         
       </ul>
