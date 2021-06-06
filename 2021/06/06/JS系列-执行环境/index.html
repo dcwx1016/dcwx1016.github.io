@@ -4,14 +4,19 @@
   <meta charset="utf-8">
   
   
-  <title>Hexo</title>
+  <title>JS系列-执行环境 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="前篇对浏览器的理解还没有解释好作用域等概念，这一篇希望结合这段时间的学习，对JS代码的执行做一个梳理。 首先回顾一下上一篇里提及的执行环境。代码的执行发生在浏览器的JS解释器&#x2F;引擎中，涉及到的两大块内存为堆内存(heap memory)和栈内存(call stack)。其中堆内存用来存放引用类型的数据，对应的地址存放在栈中。基本类型的数据存放在栈中。 在执行前，重要的一步是进行预编译，首先创建一个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS系列-执行环境">
+<meta property="og:url" content="http://example.com/2021/06/06/JS%E7%B3%BB%E5%88%97-%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前篇对浏览器的理解还没有解释好作用域等概念，这一篇希望结合这段时间的学习，对JS代码的执行做一个梳理。 首先回顾一下上一篇里提及的执行环境。代码的执行发生在浏览器的JS解释器&#x2F;引擎中，涉及到的两大块内存为堆内存(heap memory)和栈内存(call stack)。其中堆内存用来存放引用类型的数据，对应的地址存放在栈中。基本类型的数据存放在栈中。 在执行前，重要的一步是进行预编译，首先创建一个">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-06T14:28:04.000Z">
+<meta property="article:modified_time" content="2021-06-06T17:31:33.782Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="this, 作用域, 闭包">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -69,9 +74,7 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-JS系列-执行环境" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-JS系列-执行环境" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/06/06/JS%E7%B3%BB%E5%88%97-%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83/" class="article-date">
   <time class="dt-published" datetime="2021-06-06T14:28:04.000Z" itemprop="datePublished">2021-06-06</time>
@@ -84,8 +87,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/06/06/JS%E7%B3%BB%E5%88%97-%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83/">JS系列-执行环境</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      JS系列-执行环境
     </h1>
   
 
@@ -137,126 +140,19 @@
     </footer>
   </div>
   
-</article>
-
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-初见浏览器" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/06/03/%E5%88%9D%E8%A7%81%E6%B5%8F%E8%A7%88%E5%99%A8/" class="article-date">
-  <time class="dt-published" datetime="2021-06-03T15:46:47.000Z" itemprop="datePublished">2021-06-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/06/03/%E5%88%9D%E8%A7%81%E6%B5%8F%E8%A7%88%E5%99%A8/">初见浏览器</a>
-    </h1>
+    <a href="/2021/06/03/%E5%88%9D%E8%A7%81%E6%B5%8F%E8%A7%88%E5%99%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">初见浏览器</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id=""><a href="#" class="headerlink" title=""></a></h2><p>这次对浏览器的一个学习，主要目的是为了理解JS代码的执行环境，希望能解决关于作用域和词法环境的问题。</p>
-<p>首先了解浏览器的构成。可以通过分析从用户输入url到呈现内容这一行为对浏览器进行拆解。对应<a target="_blank" rel="noopener" href="https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/">此处的分析</a>，可以分为以下几块：</p>
-<ul>
-<li>用户界面。例如菜单栏，滚动条等等，接受用户的输入。</li>
-<li>浏览器引擎。将用户的输入传递给呈现引擎。</li>
-<li><strong>呈现引擎</strong>。通过网络获取资源后，进行解析、构建、布局和绘制。<ul>
-<li>html有专门的解析算法（标记化及树构建），而css则可以用常用的解析方法（词法分析，语法分析）。</li>
-<li><input disabled="" type="checkbox"> 需要了解对应的性能优化方法。</li>
-</ul>
-</li>
-<li><strong>JS解释器</strong>。基本组成包含Call stack和heap memory。执行机制为<strong>事件循环</strong>。<ul>
-<li>运行三部曲：语法分析，预编译，解析执行。</li>
-<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6954583720913272863"><strong>预编译</strong></a>。<ul>
-<li>全局预编译：创建global object对象；变量声明；函数声明</li>
-<li>函数预编译：创建activity object对象；形参和变量声明；形参和实参统一；函数声明。</li>
-<li>决定[作用域]。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>UI后端。绘制相关。</li>
-<li>网络。</li>
-<li>数据储存。</li>
-</ul>
-<p>从另一个角度(?)来说, 浏览器的线程包括GUI渲染、JS引擎、事件触发、定时器触发、异步http请求线程。其中GUI渲染和JS互斥，这也是导致阻塞的原因（长时间未进行渲染）。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/03/%E5%88%9D%E8%A7%81%E6%B5%8F%E8%A7%88%E5%99%A8/" data-id="ckplply0q0001f5w6b32dej5q" data-title="初见浏览器" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-
-  
-    <article id="post-博客搭建" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/06/03/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" class="article-date">
-  <time class="dt-published" datetime="2021-06-03T15:41:11.676Z" itemprop="datePublished">2021-06-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/06/03/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p><a target="_blank" rel="noopener" href="https://vic.kim/2019/05/25/Mac%E4%B8%8B%E4%BD%BF%E7%94%A8Hexo-Github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">https://vic.kim/2019/05/25/Mac%E4%B8%8B%E4%BD%BF%E7%94%A8Hexo-Github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</a></p>
-<p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/03/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" data-id="ckplply0y0004f5w60oeq6szq" data-title="博客搭建" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
 </section>
