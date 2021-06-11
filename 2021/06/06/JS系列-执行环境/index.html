@@ -14,7 +14,7 @@
 <meta property="og:description" content="前篇对浏览器的理解还没有解释好作用域等概念，这一篇希望结合这段时间的学习，对JS代码的执行做一个梳理。 首先回顾一下上一篇里提及的执行环境。代码的执行发生在浏览器的JS解释器&#x2F;引擎中，涉及到的两大块内存为堆内存(heap memory)和栈内存(call stack)。其中堆内存用来存放引用类型的数据，对应的地址存放在栈中。基本类型的数据存放在栈中。 在执行前，重要的一步是进行预编译，首先创建一个">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-06-06T14:28:04.000Z">
-<meta property="article:modified_time" content="2021-06-06T17:31:33.782Z">
+<meta property="article:modified_time" content="2021-06-07T16:56:14.058Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="this, 作用域, 闭包">
 <meta name="twitter:card" content="summary">
@@ -106,6 +106,10 @@
 <li>三种特殊情景指向window: 立即执行函数，setTimeout, setInterval。</li>
 <li>改变this指向：<code>apply</code>,<code>bind</code>,<code>call</code>。</li>
 </ul>
+<p>[ES5&amp;6]:</p>
+<ol>
+<li>let,const: 块级作用域/花括号；不存在变量提升（不会变成<code>undefined</code>），但是存在暂时性死区(<code>Reference error: cannot access before initialization</code>)。</li>
+</ol>
 <p>[常见定义]:</p>
 <ol>
 <li>作用域：储存和访问变量的规则。包含全局、函数、块级作用域。/ 当前所处的执行上下文。<ol>
@@ -131,7 +135,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/06/JS%E7%B3%BB%E5%88%97-%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83/" data-id="ckplply0l0000f5w686672nzv" data-title="JS系列-执行环境" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/06/JS%E7%B3%BB%E5%88%97-%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83/" data-id="ckpsvt7fc0003bpw62xhpeu67" data-title="JS系列-执行环境" class="article-share-link">Share</a>
       
       
       
@@ -142,6 +146,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2021/06/07/JS%E7%B3%BB%E5%88%97-%E5%BC%82%E6%AD%A5/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          JS系列-异步
+        
+      </div>
+    </a>
   
   
     <a href="/2021/06/03/%E5%88%9D%E8%A7%81%E6%B5%8F%E8%A7%88%E5%99%A8/" id="article-nav-older" class="article-nav-link-wrap">
@@ -196,6 +209,14 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2021/06/11/%E6%AF%95%E8%AE%BEblog/">毕设blog</a>
+          </li>
+        
+          <li>
+            <a href="/2021/06/07/JS%E7%B3%BB%E5%88%97-%E5%BC%82%E6%AD%A5/">JS系列-异步</a>
+          </li>
         
           <li>
             <a href="/2021/06/06/JS%E7%B3%BB%E5%88%97-%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83/">JS系列-执行环境</a>
