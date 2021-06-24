@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>JS系列(三)DOM、事件及防抖节流 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="DOM基本 节点类型：元素节点、文本节点、属性节点 节点关系：父子，兄弟 增删改查： 查：getElementById;getElementByClassName;getElementByTagName;querySelector 删：remove;removeChild 改： 交换位置：insertBefore 查改属性：setAttribute   增：  createElement;appe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS系列(三)DOM、事件及防抖节流">
+<meta property="og:url" content="http://example.com/2021/06/24/JS%E7%B3%BB%E5%88%97(%E4%B8%89)DOM%E3%80%81%E4%BA%8B%E4%BB%B6%E5%8F%8A%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="DOM基本 节点类型：元素节点、文本节点、属性节点 节点关系：父子，兄弟 增删改查： 查：getElementById;getElementByClassName;getElementByTagName;querySelector 删：remove;removeChild 改： 交换位置：insertBefore 查改属性：setAttribute   增：  createElement;appe">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-23T23:44:36.000Z">
+<meta property="article:modified_time" content="2021-06-24T00:22:35.324Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-JS系列(三)DOM、事件及防抖节流" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/06/24/JS%E7%B3%BB%E5%88%97(%E4%B8%89)DOM%E3%80%81%E4%BA%8B%E4%BB%B6%E5%8F%8A%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/" class="article-date">
+  <time class="dt-published" datetime="2021-06-23T23:44:36.000Z" itemprop="datePublished">2021-06-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      JS系列(三)DOM、事件及防抖节流
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="DOM基本"><a href="#DOM基本" class="headerlink" title="DOM基本"></a>DOM基本</h1><ol>
+<li>节点类型：元素节点、文本节点、属性节点</li>
+<li>节点关系：父子，兄弟</li>
+<li>增删改查：<ol>
+<li>查：<code>getElementById;getElementByClassName;getElementByTagName;querySelector</code></li>
+<li>删：<code>remove;removeChild</code></li>
+<li>改：<ol>
+<li>交换位置：<code>insertBefore</code></li>
+<li>查改属性：<code>setAttribute</code></li>
+</ol>
+</li>
+<li>增：<ol>
+<li><input disabled="" type="checkbox"> <code>createElement;append;appendChild</code>区别</li>
+<li><input disabled="" type="checkbox"> <code>.innerHTML;.innerText;.textContent</code>区别</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="事件流、自定义事件及事件委托"><a href="#事件流、自定义事件及事件委托" class="headerlink" title="事件流、自定义事件及事件委托"></a>事件流、自定义事件及事件委托</h1><ol>
+<li>DOM2标准：捕获-&gt;目标-&gt;冒泡</li>
+<li>常考概念：<ol>
+<li><code>currentTarget</code>当前元素</li>
+<li><code>target</code>触发事件的元素</li>
+<li><code>preventDefault</code>比如阻止链接的默认跳转</li>
+<li><code>stopPropagation</code>阻止事件传播</li>
+</ol>
+</li>
+<li>自定义事件，如实现同级元素的通信。<code>new Event(&#39;clickA&#39;);.dispatchEvent();</code></li>
+<li>事件代理/事件委托：<ol>
+<li>特征：元素特征相同，事件相同，监听函数相同。</li>
+<li>实现：将监听函数注册在父元素上。</li>
+</ol>
+</li>
+</ol>
+<h1 id="防抖、节流"><a href="#防抖、节流" class="headerlink" title="防抖、节流"></a>防抖、节流</h1><ol>
+<li><strong>核心思想</strong>：通过对事件对应的回调函数进行包裹，缓存事件信息，控制事件的触发频率。</li>
+<li>节流:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">function throttle(fn, interval)&#123;</span><br><span class="line">    let last = 0;</span><br><span class="line"></span><br><span class="line">    return function ()&#123;</span><br><span class="line">        let context = this;</span><br><span class="line">        let args = arguments;</span><br><span class="line">        let now = new Date();</span><br><span class="line">        if(now - last &gt;= interval)&#123;</span><br><span class="line">            last = now;</span><br><span class="line">            fn.apply(context, args);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const better_scroll = throttle(()=&gt;console.log(&#x27;滚动&#x27;), 1000)</span><br><span class="line">document.addEventListener(&#x27;scroll&#x27;, better_scroll)</span><br></pre></td></tr></table></figure></li>
+<li>防抖：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">function debounce(fn, delay)&#123;</span><br><span class="line">    let timer = null;</span><br><span class="line"></span><br><span class="line">    return function()&#123;</span><br><span class="line">        let context = this;</span><br><span class="line">        let args = arguments;</span><br><span class="line"></span><br><span class="line">        if(timer)&#123;</span><br><span class="line">            clearTimeout(timer);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        timer = setTimeout(function()&#123;</span><br><span class="line">            fn.apply(context, args)</span><br><span class="line">        &#125;, delay)</span><br><span class="line">    &#125;</span><br><span class="line">    const better_scroll = debounce(()=&gt;console.log(&#x27;滚动&#x27;), 1000)</span><br><span class="line">    document.addEventListener(&#x27;scroll&#x27;, better_scroll)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/06/24/JS%E7%B3%BB%E5%88%97(%E4%B8%89)DOM%E3%80%81%E4%BA%8B%E4%BB%B6%E5%8F%8A%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/" data-id="ckqa6wpak00013gw6g0tm1df3" data-title="JS系列(三)DOM、事件及防抖节流" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/06/20/React%E7%B3%BB%E5%88%97(%E4%B8%80)JSX%E4%B8%8E%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">React系列(一)JSX与组件的生命周期</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/this-%E4%BD%9C%E7%94%A8%E5%9F%9F-%E9%97%AD%E5%8C%85/" rel="tag">this, 作用域, 闭包</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/this-%E4%BD%9C%E7%94%A8%E5%9F%9F-%E9%97%AD%E5%8C%85/" style="font-size: 10px;">this, 作用域, 闭包</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/06/24/JS%E7%B3%BB%E5%88%97(%E4%B8%89)DOM%E3%80%81%E4%BA%8B%E4%BB%B6%E5%8F%8A%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/">JS系列(三)DOM、事件及防抖节流</a>
+          </li>
+        
+          <li>
+            <a href="/2021/06/20/React%E7%B3%BB%E5%88%97(%E4%B8%80)JSX%E4%B8%8E%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">React系列(一)JSX与组件的生命周期</a>
+          </li>
+        
+          <li>
+            <a href="/2021/06/19/JS%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E7%BA%BF%E6%80%A7%E8%A1%A8/">JS数据结构与算法-线性表</a>
+          </li>
+        
+          <li>
+            <a href="/2021/06/11/%E6%AF%95%E8%AE%BEblog/">毕设blog</a>
+          </li>
+        
+          <li>
+            <a href="/2021/06/07/JS%E7%B3%BB%E5%88%97(%E4%BA%8C)%E5%BC%82%E6%AD%A5/">JS系列(二)异步</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

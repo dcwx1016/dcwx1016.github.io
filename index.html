@@ -71,6 +71,293 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-JS系列(三)DOM、事件及防抖节流" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/06/24/JS%E7%B3%BB%E5%88%97(%E4%B8%89)DOM%E3%80%81%E4%BA%8B%E4%BB%B6%E5%8F%8A%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/" class="article-date">
+  <time class="dt-published" datetime="2021-06-23T23:44:36.000Z" itemprop="datePublished">2021-06-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/06/24/JS%E7%B3%BB%E5%88%97(%E4%B8%89)DOM%E3%80%81%E4%BA%8B%E4%BB%B6%E5%8F%8A%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/">JS系列(三)DOM、事件及防抖节流</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="DOM基本"><a href="#DOM基本" class="headerlink" title="DOM基本"></a>DOM基本</h1><ol>
+<li>节点类型：元素节点、文本节点、属性节点</li>
+<li>节点关系：父子，兄弟</li>
+<li>增删改查：<ol>
+<li>查：<code>getElementById;getElementByClassName;getElementByTagName;querySelector</code></li>
+<li>删：<code>remove;removeChild</code></li>
+<li>改：<ol>
+<li>交换位置：<code>insertBefore</code></li>
+<li>查改属性：<code>setAttribute</code></li>
+</ol>
+</li>
+<li>增：<ol>
+<li><input disabled="" type="checkbox"> <code>createElement;append;appendChild</code>区别</li>
+<li><input disabled="" type="checkbox"> <code>.innerHTML;.innerText;.textContent</code>区别</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="事件流、自定义事件及事件委托"><a href="#事件流、自定义事件及事件委托" class="headerlink" title="事件流、自定义事件及事件委托"></a>事件流、自定义事件及事件委托</h1><ol>
+<li>DOM2标准：捕获-&gt;目标-&gt;冒泡</li>
+<li>常考概念：<ol>
+<li><code>currentTarget</code>当前元素</li>
+<li><code>target</code>触发事件的元素</li>
+<li><code>preventDefault</code>比如阻止链接的默认跳转</li>
+<li><code>stopPropagation</code>阻止事件传播</li>
+</ol>
+</li>
+<li>自定义事件，如实现同级元素的通信。<code>new Event(&#39;clickA&#39;);.dispatchEvent();</code></li>
+<li>事件代理/事件委托：<ol>
+<li>特征：元素特征相同，事件相同，监听函数相同。</li>
+<li>实现：将监听函数注册在父元素上。</li>
+</ol>
+</li>
+</ol>
+<h1 id="防抖、节流"><a href="#防抖、节流" class="headerlink" title="防抖、节流"></a>防抖、节流</h1><ol>
+<li><strong>核心思想</strong>：通过对事件对应的回调函数进行包裹，缓存事件信息，控制事件的触发频率。</li>
+<li>节流:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">function throttle(fn, interval)&#123;</span><br><span class="line">    let last = 0;</span><br><span class="line"></span><br><span class="line">    return function ()&#123;</span><br><span class="line">        let context = this;</span><br><span class="line">        let args = arguments;</span><br><span class="line">        let now = new Date();</span><br><span class="line">        if(now - last &gt;= interval)&#123;</span><br><span class="line">            last = now;</span><br><span class="line">            fn.apply(context, args);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const better_scroll = throttle(()=&gt;console.log(&#x27;滚动&#x27;), 1000)</span><br><span class="line">document.addEventListener(&#x27;scroll&#x27;, better_scroll)</span><br></pre></td></tr></table></figure></li>
+<li>防抖：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">function debounce(fn, delay)&#123;</span><br><span class="line">    let timer = null;</span><br><span class="line"></span><br><span class="line">    return function()&#123;</span><br><span class="line">        let context = this;</span><br><span class="line">        let args = arguments;</span><br><span class="line"></span><br><span class="line">        if(timer)&#123;</span><br><span class="line">            clearTimeout(timer);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        timer = setTimeout(function()&#123;</span><br><span class="line">            fn.apply(context, args)</span><br><span class="line">        &#125;, delay)</span><br><span class="line">    &#125;</span><br><span class="line">    const better_scroll = debounce(()=&gt;console.log(&#x27;滚动&#x27;), 1000)</span><br><span class="line">    document.addEventListener(&#x27;scroll&#x27;, better_scroll)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/06/24/JS%E7%B3%BB%E5%88%97(%E4%B8%89)DOM%E3%80%81%E4%BA%8B%E4%BB%B6%E5%8F%8A%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/" data-id="ckqa6wpak00013gw6g0tm1df3" data-title="JS系列(三)DOM、事件及防抖节流" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-React系列(一)JSX与组件的生命周期" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/06/20/React%E7%B3%BB%E5%88%97(%E4%B8%80)JSX%E4%B8%8E%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" class="article-date">
+  <time class="dt-published" datetime="2021-06-20T09:39:55.000Z" itemprop="datePublished">2021-06-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/06/20/React%E7%B3%BB%E5%88%97(%E4%B8%80)JSX%E4%B8%8E%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">React系列(一)JSX与组件的生命周期</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="JSX"><a href="#JSX" class="headerlink" title="JSX"></a>JSX</h1><ol>
+<li>定义：作为js的扩展，以类html的语法，通过babel编译为<code>React.createElement</code>,获取返回的<code>ReactElement</code>对象，最终生成<strong>虚拟DOM</strong>。<ol>
+<li>其中<code>React.createElement</code>本身只是对参数进行格式化。</li>
+<li>而<code>ReactElement</code>对象则是对DOM的描述。</li>
+<li>渲染时：<code>ReactDOM.render(虚拟DOM,真实DOM)</code></li>
+</ol>
+</li>
+</ol>
+<h1 id="组件生命周期"><a href="#组件生命周期" class="headerlink" title="组件生命周期"></a>组件生命周期</h1><ol>
+<li>组件特点：’封闭’-渲染；’开放’-组件间通信。</li>
+<li>生命周期：以<code>render</code>为核心</li>
+<li>React15:<ol>
+<li>挂载(仅发生一次)：<code>constructor;ComponentWillMount;render;ComponentDidMount(异步请求,操作真实DOM)</code></li>
+<li>更新：<ol>
+<li><code>ComponentWillReceiveProps(父组件触发);</code></li>
+<li><code>ShouldComponentUpdate(自身set state触发);</code>//<strong>性能优化</strong></li>
+<li><code>ComponentWillUpdate;render;ComponentDidUpdate</code></li>
+<li>重点：父组件的重新渲染<strong>或</strong>props的改变会导致子组件的渲染。</li>
+</ol>
+</li>
+<li>卸载：<code>ComponentWillUnmount</code> <ul>
+<li>(组件在父组件中被移除；key值变化)</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>React16.4:<br><img src="/lifecycle.png" alt="diagram"><ol>
+<li>挂载:<ol>
+<li><code>static getDerivedStateFromProps(prop, state)</code></li>
+<li>取代<code>ComponentWillReceiveProps</code>, 为静态方法（函数式？），实现state的定向更新。</li>
+<li><code>render</code> + <code>ComponentDidMount</code></li>
+</ol>
+</li>
+<li>更新:<ol>
+<li><code>GetSnapshotBeforeUpdate</code>取代<code>ComponentWillUpdate</code>,生成值会传给<code>ComponentDidUpdate</code>,同时获取更新前的真实DOM及更新后的state&props;</li>
+</ol>
+</li>
+<li>卸载：不变</li>
+</ol>
+</li>
+<li>核心变化：适应Fiber架构，将render和commit进行拆分，其中render可以被打断，实现<strong>异步渲染</strong>。<ol>
+<li>重复执行render使得上述一些方法不适合被执行。</li>
+</ol>
+</li>
+</ol>
+<h1 id="组件间通信"><a href="#组件间通信" class="headerlink" title="组件间通信"></a>组件间通信</h1><ol>
+<li>props传递:父-子，子-父，兄弟（父-子+子-父）间通信。<ul>
+<li>不适合多层嵌套的组件关系。</li>
+</ul>
+</li>
+<li><strong>发布-订阅模式</strong>：<ul>
+<li>手撕代码：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Class EventEmitter()&#123;</span><br><span class="line">   constructor()&#123;</span><br><span class="line">      this.eventLoop = [];</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   on (type, func)&#123;</span><br><span class="line">      if(!(func isinstanceof Function)) throw new Error(&quot;来个函数&quot;);</span><br><span class="line">      if(!this.eventLoop[type]) this.eventLoop[type] = [];</span><br><span class="line">      this.eventLoop[type].push(func);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   emit(type,param)&#123;</span><br><span class="line">      if(this.eventLoop[type]) &#123;</span><br><span class="line">         this.eventLoop[type].foreach((item, index) =&gt; &#123;</span><br><span class="line">         item(param);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   off(type, handler)&#123;</span><br><span class="line">      if(this.eventLoop[type]) &#123;</span><br><span class="line">         this.eventLoop[type].splice(this.eventLoop[type].indexOf(handler),1)</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>Context API:<ol>
+<li>旧API：provider和consumer区分不明显, 容易导致数据不同步</li>
+<li>新API: 数据会穿透<code>ShouldComponentUpdate</code>，实现同步<ul>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000018215032">相关代码</a>：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyContext.Provider </span><br><span class="line">value = (&#123;cars: this.state.cars&#125;)</span><br><span class="line">&gt; //顶层组件，生产数据。</span><br><span class="line">&#123;this.props.children&#125;</span><br><span class="line">&lt;/MyContext.Provider&gt;</span><br><span class="line"></span><br><span class="line">&lt;MyContext.Consumer&gt;</span><br><span class="line">&#123;context =&gt; (</span><br><span class="line">   context.cars //子组件访问context</span><br><span class="line">)&#125;</span><br><span class="line">&lt;/MyContext.Consumer&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+</li>
+<li>Redux: Action -&gt; Reducer -&gt; Store -&gt; View，单向数据流。</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/06/20/React%E7%B3%BB%E5%88%97(%E4%B8%80)JSX%E4%B8%8E%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" data-id="ckqa6wpan00043gw60abqdj7f" data-title="React系列(一)JSX与组件的生命周期" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-JS数据结构与算法-线性表" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/06/19/JS%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E7%BA%BF%E6%80%A7%E8%A1%A8/" class="article-date">
+  <time class="dt-published" datetime="2021-06-19T14:34:22.000Z" itemprop="datePublished">2021-06-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/06/19/JS%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E7%BA%BF%E6%80%A7%E8%A1%A8/">JS数据结构与算法-线性表</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>前端算法与数据结构面试：底层逻辑解读与大厂真题训练<br><a target="_blank" rel="noopener" href="https://juejin.cn/book/6844733800300150797/section/6844733800350482445">https://juejin.cn/book/6844733800300150797/section/6844733800350482445</a></p>
+<h1 id="数组及链表知识点"><a href="#数组及链表知识点" class="headerlink" title="数组及链表知识点"></a>数组及链表知识点</h1><ol>
+<li>数组的创建：<code>const arr = (new Array(10)).fill(1);const arr = [];</code></li>
+<li>数组的循环和遍历：<ol>
+<li><code>for(let i = 0; i &lt; arr.length; i++);</code>//遍历最快</li>
+<li><code>arr.foreach((item, index) =&gt; &#123;console.log(item, index)&#125;)</code></li>
+<li><code>arr.map(i -&gt; i+3);</code>//与foreach的区别在于返回新数组</li>
+<li> 二维数组创建：初始化时注意区分原始类型和引用类型。</li>
+</ol>
+</li>
+<li>数组的增删：<ol>
+<li>增：<code>unshift(), push(), splice(index,0,value)</code></li>
+<li>删：<code>shift(), pop(), splice(index, 1)</code></li>
+</ol>
+</li>
+<li>栈和队列的特点：基于数组的api。</li>
+<li>链表：<ol>
+<li>创建：构造函数。<code>function ListNode(val)&#123;this.val = val;this.next = null&#125;</code></li>
+<li>节点的增删：挪移指针。</li>
+</ol>
+</li>
+<li>链表与数组的<strong>辨析</strong>：<ol>
+<li>快慢数组的区别：纯数字数组对应连续内存，不同数据类型则对应哈希值，由对象链表实现。</li>
+<li>增删查改的时间复杂度对比。</li>
+</ol>
+</li>
+</ol>
+<h1 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h1><h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a><a target="_blank" rel="noopener" href="https://juejin.cn/book/6844733800300150797/section/6844733800350498824">数组</a></h2><ol>
+<li><p><input disabled="" type="checkbox">  合并两个有序数组</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">nums1 = [1,2,3,0,0,0], m = 3</span><br><span class="line">nums2 = [2,5,6],       n = 3</span><br><span class="line"></span><br><span class="line">输出: [1,2,2,3,5,6]</span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">思路：扩容后倒序插入最大值</span><br></pre></td></tr></table></figure></li>
+<li><p><input disabled="" type="checkbox">  Two sum &amp; Three sum</p>
+</li>
+<li><p><input disabled="" type="checkbox">  数组去重</p>
+</li>
+<li><p><input disabled="" type="checkbox">  数据交集</p>
+<h2 id="字符串基本"><a href="#字符串基本" class="headerlink" title="字符串基本"></a><a target="_blank" rel="noopener" href="https://juejin.cn/book/6844733800300150797/section/6844733800350482445">字符串基本</a></h2></li>
+<li><p><input disabled="" type="checkbox">  反转字符串<code>str.split(&quot;&quot;).reverse().join()</code></p>
+</li>
+<li><p><input disabled="" type="checkbox">  判断回文</p>
+</li>
+<li><p><input disabled="" type="checkbox">  衍生：删除一个字符后是否回文</p>
+</li>
+<li><p><input disabled="" type="checkbox">  字符串匹配-正则表达式</p>
+</li>
+<li><p><input disabled="" type="checkbox">  字符串转数字</p>
+<h2 id="链表"><a href="#链表" class="headerlink" title="[链表]"></a>[链表]</h2></li>
+<li><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/merge-two-sorted-lists/submissions/">链表的合并</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/remove-duplicates-from-sorted-list/submissions/">链表节点的删除</a></p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/submissions/">延伸题</a></li>
+</ol>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/remove-nth-node-from-end-of-list/submissions/">快慢指针-删除倒数第N个节点</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/reverse-linked-list/submissions/">多指针-链表的反转</a></p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://leetcode.com/problems/reverse-linked-list-ii/submissions/">延伸：局部反转</a></li>
+</ol>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/linked-list-cycle/submissions/">判断链表是否成环</a></p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://leetcode.com/problems/linked-list-cycle-ii/submissions/">延伸：定位环的起点</a> // 原理？<h2 id="栈和队列"><a href="#栈和队列" class="headerlink" title="[栈和队列]"></a>[栈和队列]</h2></li>
+</ol>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://github.com/trekhleb/javascript-algorithms/blob/master/README.zh-CN.md">https://github.com/trekhleb/javascript-algorithms/blob/master/README.zh-CN.md</a><br><a target="_blank" rel="noopener" href="https://www.pzijun.cn/algorithms/array/6.html">https://www.pzijun.cn/algorithms/array/6.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/06/19/JS%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E7%BA%BF%E6%80%A7%E8%A1%A8/" data-id="ckqa6wpae00003gw65e5ifi8t" data-title="JS数据结构与算法-线性表" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-毕设blog" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/06/11/%E6%AF%95%E8%AE%BEblog/" class="article-date">
@@ -113,11 +400,25 @@
 </li>
 <li>TO READ: <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=06TE_U21FK4">https://www.youtube.com/watch?v=06TE_U21FK4</a></li>
 </ol>
+<p>6.16 拿到Kinect v2<br>6.17 和客户meeting: 当前着重kinect和mediapipe的对比</p>
+<p>6.19-6.21 先后尝试PD,BOOTCAMP和外接启动盘，以更新mac os及BOOTCAMP结束。</p>
+<p>6.22 着手准备环境搭建</p>
+<ol>
+<li>kinect加unity: <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=m3BAlJAGIkQ&amp;t=174s">https://www.youtube.com/watch?v=m3BAlJAGIkQ&amp;t=174s</a></li>
+<li>Mediapipe加unity: <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Uz1rkm8Z1AE">https://www.youtube.com/watch?v=Uz1rkm8Z1AE</a><ol>
+<li>codebase:<a target="_blank" rel="noopener" href="https://github.com/t-takasaka/tensorflow/tree/master/tensorflow/lite/experimental/examples/unity">https://github.com/t-takasaka/tensorflow/tree/master/tensorflow/lite/experimental/examples/unity</a></li>
+</ol>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/homuler/MediaPipeUnityPlugin#macOS">https://github.com/homuler/MediaPipeUnityPlugin#macOS</a></li>
+<li>MediaPipe Unity Plugin <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/18363022/importerror-no-module-named-pip">https://stackoverflow.com/questions/18363022/importerror-no-module-named-pip</a> // this works!</li>
+<li>discussion on mediapipe and unity:<a target="_blank" rel="noopener" href="https://github.com/google/mediapipe/issues/36">https://github.com/google/mediapipe/issues/36</a></li>
+<li>discussion on mediapip vs tensorflow.js <a target="_blank" rel="noopener" href="https://github.com/google/mediapipe/issues/1156">https://github.com/google/mediapipe/issues/1156</a></li>
+</ol>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/11/%E6%AF%95%E8%AE%BEblog/" data-id="ckpsvt7fd0004bpw69dn04ltx" data-title="毕设blog" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/11/%E6%AF%95%E8%AE%BEblog/" data-id="ckqa6wpao00053gw65fya1ah0" data-title="毕设blog" class="article-share-link">Share</a>
       
       
       
@@ -129,9 +430,9 @@
 
 
   
-    <article id="post-JS系列-异步" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-JS系列(二)异步" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2021/06/07/JS%E7%B3%BB%E5%88%97-%E5%BC%82%E6%AD%A5/" class="article-date">
+    <a href="/2021/06/07/JS%E7%B3%BB%E5%88%97(%E4%BA%8C)%E5%BC%82%E6%AD%A5/" class="article-date">
   <time class="dt-published" datetime="2021-06-07T16:07:53.000Z" itemprop="datePublished">2021-06-07</time>
 </a>
     
@@ -143,7 +444,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/06/07/JS%E7%B3%BB%E5%88%97-%E5%BC%82%E6%AD%A5/">JS系列-异步</a>
+      <a class="p-name article-title" href="/2021/06/07/JS%E7%B3%BB%E5%88%97(%E4%BA%8C)%E5%BC%82%E6%AD%A5/">JS系列(二)异步</a>
     </h1>
   
 
@@ -158,11 +459,11 @@
 </li>
 <li>何时执行异步 -&gt; 宏任务，微任务</li>
 </ol>
-
+<h2 id="异步-决议程序"><a href="#异步-决议程序" class="headerlink" title="异步 - 决议程序"></a>异步 - 决议程序</h2>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/07/JS%E7%B3%BB%E5%88%97-%E5%BC%82%E6%AD%A5/" data-id="ckpsvt7f40000bpw60qln5l4s" data-title="JS系列-异步" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/07/JS%E7%B3%BB%E5%88%97(%E4%BA%8C)%E5%BC%82%E6%AD%A5/" data-id="ckqa6wpap00073gw637ad3gdl" data-title="JS系列(二)异步" class="article-share-link">Share</a>
       
       
       
@@ -174,9 +475,9 @@
 
 
   
-    <article id="post-JS系列-执行环境" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-JS系列(一)执行环境" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2021/06/06/JS%E7%B3%BB%E5%88%97-%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83/" class="article-date">
+    <a href="/2021/06/06/JS%E7%B3%BB%E5%88%97(%E4%B8%80)%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83/" class="article-date">
   <time class="dt-published" datetime="2021-06-06T14:28:04.000Z" itemprop="datePublished">2021-06-06</time>
 </a>
     
@@ -188,7 +489,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/06/06/JS%E7%B3%BB%E5%88%97-%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83/">JS系列-执行环境</a>
+      <a class="p-name article-title" href="/2021/06/06/JS%E7%B3%BB%E5%88%97(%E4%B8%80)%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83/">JS系列(一)执行环境</a>
     </h1>
   
 
@@ -235,7 +536,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/06/JS%E7%B3%BB%E5%88%97-%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83/" data-id="ckpsvt7fc0003bpw62xhpeu67" data-title="JS系列-执行环境" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/06/JS%E7%B3%BB%E5%88%97(%E4%B8%80)%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83/" data-id="ckqa6wpao00063gw69jmtdo3j" data-title="JS系列(一)执行环境" class="article-share-link">Share</a>
       
       
       
@@ -300,7 +601,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/03/%E5%88%9D%E8%A7%81%E6%B5%8F%E8%A7%88%E5%99%A8/" data-id="ckpsvt7f90001bpw6dizocm8g" data-title="初见浏览器" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/03/%E5%88%9D%E8%A7%81%E6%B5%8F%E8%A7%88%E5%99%A8/" data-id="ckqa6wpal00023gw64vj47ch6" data-title="初见浏览器" class="article-share-link">Share</a>
       
       
       
@@ -352,7 +653,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/03/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" data-id="ckpsvt7fb0002bpw6089oh2er" data-title="博客搭建" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/03/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" data-id="ckqa6wpam00033gw68lad47qc" data-title="博客搭建" class="article-share-link">Share</a>
       
       
       
@@ -409,23 +710,23 @@
       <ul>
         
           <li>
+            <a href="/2021/06/24/JS%E7%B3%BB%E5%88%97(%E4%B8%89)DOM%E3%80%81%E4%BA%8B%E4%BB%B6%E5%8F%8A%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/">JS系列(三)DOM、事件及防抖节流</a>
+          </li>
+        
+          <li>
+            <a href="/2021/06/20/React%E7%B3%BB%E5%88%97(%E4%B8%80)JSX%E4%B8%8E%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">React系列(一)JSX与组件的生命周期</a>
+          </li>
+        
+          <li>
+            <a href="/2021/06/19/JS%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E7%BA%BF%E6%80%A7%E8%A1%A8/">JS数据结构与算法-线性表</a>
+          </li>
+        
+          <li>
             <a href="/2021/06/11/%E6%AF%95%E8%AE%BEblog/">毕设blog</a>
           </li>
         
           <li>
-            <a href="/2021/06/07/JS%E7%B3%BB%E5%88%97-%E5%BC%82%E6%AD%A5/">JS系列-异步</a>
-          </li>
-        
-          <li>
-            <a href="/2021/06/06/JS%E7%B3%BB%E5%88%97-%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83/">JS系列-执行环境</a>
-          </li>
-        
-          <li>
-            <a href="/2021/06/03/%E5%88%9D%E8%A7%81%E6%B5%8F%E8%A7%88%E5%99%A8/">初见浏览器</a>
-          </li>
-        
-          <li>
-            <a href="/2021/06/03/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a>
+            <a href="/2021/06/07/JS%E7%B3%BB%E5%88%97(%E4%BA%8C)%E5%BC%82%E6%AD%A5/">JS系列(二)异步</a>
           </li>
         
       </ul>
