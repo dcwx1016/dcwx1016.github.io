@@ -71,6 +71,74 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-React系列(二)Hooks" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/06/24/React%E7%B3%BB%E5%88%97(%E4%BA%8C)Hooks/" class="article-date">
+  <time class="dt-published" datetime="2021-06-24T21:12:50.000Z" itemprop="datePublished">2021-06-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/06/24/React%E7%B3%BB%E5%88%97(%E4%BA%8C)Hooks/">React系列(二)Hooks</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Hooks"><a href="#Hooks" class="headerlink" title="Hooks"></a>Hooks</h1><ol>
+<li>类组件和函数组件：<ol>
+<li>类组件继承了组件的生命周期的所有方法，功能齐全但对于一般组件来说过于复杂。</li>
+<li>函数组件功能精炼，但是不方便储存状态。</li>
+</ol>
+</li>
+<li>Hooks：通过<code>useState</code>和<code>useEffect</code>为函数组件提供额外功能，对标类组件。<ol>
+<li>帮助函数组件<strong>捕获render的状态，将数据和渲染绑定在一起</strong>。</li>
+<li>源码背后的链路：基于<strong>链表</strong>进行遍历，所以Hooks不能放在<code>if</code>等条件语句中。</li>
+</ol>
+</li>
+<li>好处：<ol>
+<li>更适合React自身基于函数式编程的设计思想。</li>
+<li>在拆分业务逻辑时，可以与生命周期进行解耦。</li>
+<li>更利于状态复用。</li>
+<li>无需考虑绑定<code>this</code>。</li>
+</ol>
+</li>
+<li>使用示例：<ol>
+<li>状态：<code>const &#123;text, setText&#125; = useState(&quot;初始状态&quot;);setText(&quot;新状态&quot;)</code></li>
+<li><strong>组件副作用</strong>(如何与生命周期进行对应)：<code>useEffect(callBack, [])</code><ol>
+<li>如果每次更新渲染时触发，则只传入第一个参数 - <code>useEffect(callBack)</code></li>
+<li>如果是需要判断某个变量是否发生变化，则在数组中传入变量 - <code>useEffect(callBack, [variable1, variable2])</code></li>
+<li>如果类似mount，则传入空数组。</li>
+<li>如果需要unmount或willupdate，在useEffect中return一个函数。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/06/24/React%E7%B3%BB%E5%88%97(%E4%BA%8C)Hooks/" data-id="ckqbhr8k20009prw66rfb5izu" data-title="React系列(二)Hooks" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-JS系列(三)DOM、事件及防抖节流" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/06/24/JS%E7%B3%BB%E5%88%97(%E4%B8%89)DOM%E3%80%81%E4%BA%8B%E4%BB%B6%E5%8F%8A%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/" class="article-date">
@@ -137,7 +205,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/24/JS%E7%B3%BB%E5%88%97(%E4%B8%89)DOM%E3%80%81%E4%BA%8B%E4%BB%B6%E5%8F%8A%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/" data-id="ckqa6wpak00013gw6g0tm1df3" data-title="JS系列(三)DOM、事件及防抖节流" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/24/JS%E7%B3%BB%E5%88%97(%E4%B8%89)DOM%E3%80%81%E4%BA%8B%E4%BB%B6%E5%8F%8A%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/" data-id="ckqbhr8jt0001prw6g09k8jtl" data-title="JS系列(三)DOM、事件及防抖节流" class="article-share-link">Share</a>
       
       
       
@@ -149,9 +217,9 @@
 
 
   
-    <article id="post-React系列(一)JSX与组件的生命周期" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-React系列(一)JSX、组件的生命周期" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2021/06/20/React%E7%B3%BB%E5%88%97(%E4%B8%80)JSX%E4%B8%8E%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" class="article-date">
+    <a href="/2021/06/20/React%E7%B3%BB%E5%88%97(%E4%B8%80)JSX%E3%80%81%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" class="article-date">
   <time class="dt-published" datetime="2021-06-20T09:39:55.000Z" itemprop="datePublished">2021-06-20</time>
 </a>
     
@@ -163,7 +231,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/06/20/React%E7%B3%BB%E5%88%97(%E4%B8%80)JSX%E4%B8%8E%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">React系列(一)JSX与组件的生命周期</a>
+      <a class="p-name article-title" href="/2021/06/20/React%E7%B3%BB%E5%88%97(%E4%B8%80)JSX%E3%80%81%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">React系列(一)JSX、组件的生命周期与数据流</a>
     </h1>
   
 
@@ -239,7 +307,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/20/React%E7%B3%BB%E5%88%97(%E4%B8%80)JSX%E4%B8%8E%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" data-id="ckqa6wpan00043gw60abqdj7f" data-title="React系列(一)JSX与组件的生命周期" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/20/React%E7%B3%BB%E5%88%97(%E4%B8%80)JSX%E3%80%81%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" data-id="ckqbhr8jz0005prw6gwyua0kk" data-title="React系列(一)JSX、组件的生命周期与数据流" class="article-share-link">Share</a>
       
       
       
@@ -320,7 +388,7 @@
 <li><p><input disabled="" type="checkbox">  字符串匹配-正则表达式</p>
 </li>
 <li><p><input disabled="" type="checkbox">  字符串转数字</p>
-<h2 id="链表"><a href="#链表" class="headerlink" title="[链表]"></a>[链表]</h2></li>
+<h2 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h2></li>
 <li><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/merge-two-sorted-lists/submissions/">链表的合并</a></p>
 </li>
 <li><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/remove-duplicates-from-sorted-list/submissions/">链表节点的删除</a></p>
@@ -337,7 +405,22 @@
 </li>
 <li><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/linked-list-cycle/submissions/">判断链表是否成环</a></p>
 <ol>
-<li><a target="_blank" rel="noopener" href="https://leetcode.com/problems/linked-list-cycle-ii/submissions/">延伸：定位环的起点</a> // 原理？<h2 id="栈和队列"><a href="#栈和队列" class="headerlink" title="[栈和队列]"></a>[栈和队列]</h2></li>
+<li><input disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="https://leetcode.com/problems/linked-list-cycle-ii/submissions/">延伸：定位环的起点</a> // 原理？</li>
+</ol>
+</li>
+</ol>
+<h2 id="栈和队列"><a href="#栈和队列" class="headerlink" title="栈和队列"></a>栈和队列</h2><ol>
+<li><p>栈</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://leetcode.com/problems/valid-parentheses/submissions/">有效括号</a></li>
+<li><a target="_blank" rel="noopener" href="https://leetcode.com/problems/min-stack/submissions/">最小栈</a>:bit tricky to manage min value.</li>
+<li><a target="_blank" rel="noopener" href="https://leetcode.com/problems/daily-temperatures/submissions/">每日温度</a></li>
+</ol>
+</li>
+<li><p>队列</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://leetcode.com/problems/implement-stack-using-queues/">实现队列</a></li>
+<li><input disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="https://leetcode.com/problems/sliding-window-maximum/"><strong>滑动窗口</strong>-双端队列</a></li>
 </ol>
 </li>
 </ol>
@@ -346,7 +429,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/19/JS%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E7%BA%BF%E6%80%A7%E8%A1%A8/" data-id="ckqa6wpae00003gw65e5ifi8t" data-title="JS数据结构与算法-线性表" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/19/JS%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E7%BA%BF%E6%80%A7%E8%A1%A8/" data-id="ckqbhr8jy0004prw6fqvlezsp" data-title="JS数据结构与算法-线性表" class="article-share-link">Share</a>
       
       
       
@@ -418,7 +501,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/11/%E6%AF%95%E8%AE%BEblog/" data-id="ckqa6wpao00053gw65fya1ah0" data-title="毕设blog" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/11/%E6%AF%95%E8%AE%BEblog/" data-id="ckqbhr8k10008prw684pqenzn" data-title="毕设blog" class="article-share-link">Share</a>
       
       
       
@@ -463,7 +546,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/07/JS%E7%B3%BB%E5%88%97(%E4%BA%8C)%E5%BC%82%E6%AD%A5/" data-id="ckqa6wpap00073gw637ad3gdl" data-title="JS系列(二)异步" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/07/JS%E7%B3%BB%E5%88%97(%E4%BA%8C)%E5%BC%82%E6%AD%A5/" data-id="ckqbhr8jw0003prw61fqvfvpy" data-title="JS系列(二)异步" class="article-share-link">Share</a>
       
       
       
@@ -536,7 +619,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/06/JS%E7%B3%BB%E5%88%97(%E4%B8%80)%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83/" data-id="ckqa6wpao00063gw69jmtdo3j" data-title="JS系列(一)执行环境" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/06/JS%E7%B3%BB%E5%88%97(%E4%B8%80)%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83/" data-id="ckqbhr8jp0000prw65gd86902" data-title="JS系列(一)执行环境" class="article-share-link">Share</a>
       
       
       
@@ -601,7 +684,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/03/%E5%88%9D%E8%A7%81%E6%B5%8F%E8%A7%88%E5%99%A8/" data-id="ckqa6wpal00023gw64vj47ch6" data-title="初见浏览器" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/03/%E5%88%9D%E8%A7%81%E6%B5%8F%E8%A7%88%E5%99%A8/" data-id="ckqbhr8k3000aprw67u0tam8y" data-title="初见浏览器" class="article-share-link">Share</a>
       
       
       
@@ -653,7 +736,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/03/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" data-id="ckqa6wpam00033gw68lad47qc" data-title="博客搭建" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/03/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" data-id="ckqbhr8k00007prw6663p5tv7" data-title="博客搭建" class="article-share-link">Share</a>
       
       
       
@@ -710,11 +793,15 @@
       <ul>
         
           <li>
+            <a href="/2021/06/24/React%E7%B3%BB%E5%88%97(%E4%BA%8C)Hooks/">React系列(二)Hooks</a>
+          </li>
+        
+          <li>
             <a href="/2021/06/24/JS%E7%B3%BB%E5%88%97(%E4%B8%89)DOM%E3%80%81%E4%BA%8B%E4%BB%B6%E5%8F%8A%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/">JS系列(三)DOM、事件及防抖节流</a>
           </li>
         
           <li>
-            <a href="/2021/06/20/React%E7%B3%BB%E5%88%97(%E4%B8%80)JSX%E4%B8%8E%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">React系列(一)JSX与组件的生命周期</a>
+            <a href="/2021/06/20/React%E7%B3%BB%E5%88%97(%E4%B8%80)JSX%E3%80%81%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">React系列(一)JSX、组件的生命周期与数据流</a>
           </li>
         
           <li>
@@ -723,10 +810,6 @@
         
           <li>
             <a href="/2021/06/11/%E6%AF%95%E8%AE%BEblog/">毕设blog</a>
-          </li>
-        
-          <li>
-            <a href="/2021/06/07/JS%E7%B3%BB%E5%88%97(%E4%BA%8C)%E5%BC%82%E6%AD%A5/">JS系列(二)异步</a>
           </li>
         
       </ul>
