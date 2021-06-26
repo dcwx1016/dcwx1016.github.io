@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>React系列(二)Hooks | Hexo</title>
+  <title>React系列(三)虚拟DOM及栈调和 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Hooks 类组件和函数组件： 类组件继承了组件的生命周期的所有方法，功能齐全但对于一般组件来说过于复杂。 函数组件功能精炼，但是不方便储存状态。   Hooks：通过useState和useEffect为函数组件提供额外功能，对标类组件。 帮助函数组件捕获render的状态，将数据和渲染绑定在一起。 源码背后的链路：基于链表进行遍历，所以Hooks不能放在if等条件语句中。   好处： 更适合R">
+  <meta name="description" content="DOM操作历史直接操作-&gt;jquery(操作量大)-&gt;引入模板引擎-&gt;数据驱动视图的更新  模板语法：解析html模板中的js -&gt; 字符串拼接生成js代码 -&gt; 执行js代码 早期的局限：无法实现高效的字符串拼接，会重建DOM。虚拟DOM 是一个对真实DOM描述的JS对象，出现在挂载阶段(渲染)及更新阶段(diff加同步)。 类似redux, 是独立于框架的思想。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="React系列(二)Hooks">
-<meta property="og:url" content="http://example.com/2021/06/24/React%E7%B3%BB%E5%88%97(%E4%BA%8C)Hooks/index.html">
+<meta property="og:title" content="React系列(三)虚拟DOM及栈调和">
+<meta property="og:url" content="http://example.com/2021/06/26/React%E7%B3%BB%E5%88%97(%E4%B8%89)%E8%99%9A%E6%8B%9FDOM%E5%8F%8A%E6%A0%88%E8%B0%83%E5%92%8C/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Hooks 类组件和函数组件： 类组件继承了组件的生命周期的所有方法，功能齐全但对于一般组件来说过于复杂。 函数组件功能精炼，但是不方便储存状态。   Hooks：通过useState和useEffect为函数组件提供额外功能，对标类组件。 帮助函数组件捕获render的状态，将数据和渲染绑定在一起。 源码背后的链路：基于链表进行遍历，所以Hooks不能放在if等条件语句中。   好处： 更适合R">
+<meta property="og:description" content="DOM操作历史直接操作-&gt;jquery(操作量大)-&gt;引入模板引擎-&gt;数据驱动视图的更新  模板语法：解析html模板中的js -&gt; 字符串拼接生成js代码 -&gt; 执行js代码 早期的局限：无法实现高效的字符串拼接，会重建DOM。虚拟DOM 是一个对真实DOM描述的JS对象，出现在挂载阶段(渲染)及更新阶段(diff加同步)。 类似redux, 是独立于框架的思想。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-06-24T21:12:50.000Z">
-<meta property="article:modified_time" content="2021-06-24T21:41:38.650Z">
+<meta property="article:published_time" content="2021-06-26T14:28:40.000Z">
+<meta property="article:modified_time" content="2021-06-26T15:08:16.145Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -73,10 +73,10 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-React系列(二)Hooks" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-React系列(三)虚拟DOM及栈调和" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2021/06/24/React%E7%B3%BB%E5%88%97(%E4%BA%8C)Hooks/" class="article-date">
-  <time class="dt-published" datetime="2021-06-24T21:12:50.000Z" itemprop="datePublished">2021-06-24</time>
+    <a href="/2021/06/26/React%E7%B3%BB%E5%88%97(%E4%B8%89)%E8%99%9A%E6%8B%9FDOM%E5%8F%8A%E6%A0%88%E8%B0%83%E5%92%8C/" class="article-date">
+  <time class="dt-published" datetime="2021-06-26T14:28:40.000Z" itemprop="datePublished">2021-06-26</time>
 </a>
     
   </div>
@@ -87,7 +87,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      React系列(二)Hooks
+      React系列(三)虚拟DOM及栈调和
     </h1>
   
 
@@ -95,41 +95,37 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="Hooks"><a href="#Hooks" class="headerlink" title="Hooks"></a>Hooks</h1><ol>
-<li>类组件和函数组件：<ol>
-<li>类组件继承了组件的生命周期的所有方法，功能齐全但对于一般组件来说过于复杂。</li>
-<li>函数组件功能精炼，但是不方便储存状态。</li>
-</ol>
-</li>
-<li>Hooks：通过<code>useState</code>和<code>useEffect</code>为函数组件提供额外功能，对标类组件。<ol>
-<li>帮助函数组件<strong>捕获render的状态，将数据和渲染绑定在一起</strong>。</li>
-<li>源码背后的链路：基于<strong>链表</strong>进行遍历，所以Hooks不能放在<code>if</code>等条件语句中。</li>
-</ol>
-</li>
-<li>好处：<ol>
-<li>更适合React自身基于函数式编程的设计思想。</li>
-<li>在拆分业务逻辑时，可以与生命周期进行解耦。</li>
-<li>更利于状态复用。</li>
-<li>无需考虑绑定<code>this</code>。</li>
-</ol>
-</li>
-<li>使用示例：<ol>
-<li>状态：<code>const &#123;text, setText&#125; = useState(&quot;初始状态&quot;);setText(&quot;新状态&quot;)</code></li>
-<li><strong>组件副作用</strong>(如何与生命周期进行对应)：<code>useEffect(callBack, [])</code><ol>
-<li>如果每次更新渲染时触发，则只传入第一个参数 - <code>useEffect(callBack)</code></li>
-<li>如果是需要判断某个变量是否发生变化，则在数组中传入变量 - <code>useEffect(callBack, [variable1, variable2])</code></li>
-<li>如果类似mount，则传入空数组。</li>
-<li>如果需要unmount或willupdate，在useEffect中return一个函数。</li>
+        <h1 id=""><a href="#" class="headerlink" title=""></a></h1><h2 id="DOM操作历史"><a href="#DOM操作历史" class="headerlink" title="DOM操作历史"></a>DOM操作历史</h2><p>直接操作-&gt;jquery(操作量大)-&gt;引入模板引擎-&gt;数据驱动视图的更新</p>
+<ol>
+<li>模板语法：解析html模板中的js -&gt; 字符串拼接生成js代码 -&gt; 执行js代码</li>
+<li>早期的局限：无法实现高效的字符串拼接，会重建DOM。<h2 id="虚拟DOM"><a href="#虚拟DOM" class="headerlink" title="虚拟DOM"></a>虚拟DOM</h2></li>
+<li>是一个对真实DOM描述的JS对象，出现在挂载阶段(渲染)及更新阶段(diff加同步)。</li>
+<li>类似redux, 是独立于框架的思想。</li>
+<li>解决方式：虚拟DOM在计算层面通过<strong>diff</strong>函数获得补丁集，然后通过<strong>patch</strong>函数差量更新真实DOM。</li>
+<li>本身不一定带来性能上的优化，因为渲染更新的过程包括JS的计算以及渲染DOM，相比于模版语法，虚拟DOM在js计算上会更耗时。但是因为常用的业务逻辑是通过<code>setState</code> 更新少量数据，所以虚拟DOM更加高效。</li>
+<li>优点：<ol>
+<li>在研发效率及研发体验上有提升，因为不需要频繁手动操作DOM。</li>
+<li>跨平台</li>
+<li>差量+批量</li>
 </ol>
 </li>
 </ol>
-</li>
+<h2 id="栈调和（React15）"><a href="#栈调和（React15）" class="headerlink" title="栈调和（React15）"></a>栈调和（React15）</h2><ol>
+<li>调和过程：通过ReactDOM等类库，将虚拟DOM映射为真实DOM的过程。</li>
+<li>包括计算差量(diff算法)及同步，其中diff算法为核心。</li>
+<li><input disabled="" type="checkbox"> diff算法, O(N)：<ol>
+<li>分层对比: 不建议跨层级的操作</li>
+<li>相同的类型 -&gt; 同样的DOM树形结构</li>
+<li>key属性作为节点的唯一标识 -&gt; 优化同级节点的增删</li>
 </ol>
-
+</li>
+<li>总结：diff逻辑上为树递归</li>
+</ol>
+<h2 id="SetState中的批量更新"><a href="#SetState中的批量更新" class="headerlink" title="[ ] SetState中的批量更新"></a>[ ] SetState中的批量更新</h2>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/24/React%E7%B3%BB%E5%88%97(%E4%BA%8C)Hooks/" data-id="ckqdwefhv0007c8w64qdybhk8" data-title="React系列(二)Hooks" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/26/React%E7%B3%BB%E5%88%97(%E4%B8%89)%E8%99%9A%E6%8B%9FDOM%E5%8F%8A%E6%A0%88%E8%B0%83%E5%92%8C/" data-id="ckqdwefhu0006c8w6a8ihdksa" data-title="React系列(三)虚拟DOM及栈调和" class="article-share-link">Share</a>
       
       
       
@@ -139,19 +135,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2021/06/26/React%E7%B3%BB%E5%88%97(%E4%B8%89)%E8%99%9A%E6%8B%9FDOM%E5%8F%8A%E6%A0%88%E8%B0%83%E5%92%8C/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          React系列(三)虚拟DOM及栈调和
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/06/24/JS%E7%B3%BB%E5%88%97(%E4%B8%89)DOM%E3%80%81%E4%BA%8B%E4%BB%B6%E5%8F%8A%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2021/06/24/React%E7%B3%BB%E5%88%97(%E4%BA%8C)Hooks/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">JS系列(三)DOM、事件及防抖节流</div>
+      <div class="article-nav-title">React系列(二)Hooks</div>
     </a>
   
 </nav>

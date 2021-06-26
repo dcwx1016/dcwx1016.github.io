@@ -71,6 +71,70 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-React系列(三)虚拟DOM及栈调和" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/06/26/React%E7%B3%BB%E5%88%97(%E4%B8%89)%E8%99%9A%E6%8B%9FDOM%E5%8F%8A%E6%A0%88%E8%B0%83%E5%92%8C/" class="article-date">
+  <time class="dt-published" datetime="2021-06-26T14:28:40.000Z" itemprop="datePublished">2021-06-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/06/26/React%E7%B3%BB%E5%88%97(%E4%B8%89)%E8%99%9A%E6%8B%9FDOM%E5%8F%8A%E6%A0%88%E8%B0%83%E5%92%8C/">React系列(三)虚拟DOM及栈调和</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id=""><a href="#" class="headerlink" title=""></a></h1><h2 id="DOM操作历史"><a href="#DOM操作历史" class="headerlink" title="DOM操作历史"></a>DOM操作历史</h2><p>直接操作-&gt;jquery(操作量大)-&gt;引入模板引擎-&gt;数据驱动视图的更新</p>
+<ol>
+<li>模板语法：解析html模板中的js -&gt; 字符串拼接生成js代码 -&gt; 执行js代码</li>
+<li>早期的局限：无法实现高效的字符串拼接，会重建DOM。<h2 id="虚拟DOM"><a href="#虚拟DOM" class="headerlink" title="虚拟DOM"></a>虚拟DOM</h2></li>
+<li>是一个对真实DOM描述的JS对象，出现在挂载阶段(渲染)及更新阶段(diff加同步)。</li>
+<li>类似redux, 是独立于框架的思想。</li>
+<li>解决方式：虚拟DOM在计算层面通过<strong>diff</strong>函数获得补丁集，然后通过<strong>patch</strong>函数差量更新真实DOM。</li>
+<li>本身不一定带来性能上的优化，因为渲染更新的过程包括JS的计算以及渲染DOM，相比于模版语法，虚拟DOM在js计算上会更耗时。但是因为常用的业务逻辑是通过<code>setState</code> 更新少量数据，所以虚拟DOM更加高效。</li>
+<li>优点：<ol>
+<li>在研发效率及研发体验上有提升，因为不需要频繁手动操作DOM。</li>
+<li>跨平台</li>
+<li>差量+批量</li>
+</ol>
+</li>
+</ol>
+<h2 id="栈调和（React15）"><a href="#栈调和（React15）" class="headerlink" title="栈调和（React15）"></a>栈调和（React15）</h2><ol>
+<li>调和过程：通过ReactDOM等类库，将虚拟DOM映射为真实DOM的过程。</li>
+<li>包括计算差量(diff算法)及同步，其中diff算法为核心。</li>
+<li><input disabled="" type="checkbox"> diff算法, O(N)：<ol>
+<li>分层对比: 不建议跨层级的操作</li>
+<li>相同的类型 -&gt; 同样的DOM树形结构</li>
+<li>key属性作为节点的唯一标识 -&gt; 优化同级节点的增删</li>
+</ol>
+</li>
+<li>总结：diff逻辑上为树递归</li>
+</ol>
+<h2 id="SetState中的批量更新"><a href="#SetState中的批量更新" class="headerlink" title="[ ] SetState中的批量更新"></a>[ ] SetState中的批量更新</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/06/26/React%E7%B3%BB%E5%88%97(%E4%B8%89)%E8%99%9A%E6%8B%9FDOM%E5%8F%8A%E6%A0%88%E8%B0%83%E5%92%8C/" data-id="ckqdwefhu0006c8w6a8ihdksa" data-title="React系列(三)虚拟DOM及栈调和" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-React系列(二)Hooks" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/06/24/React%E7%B3%BB%E5%88%97(%E4%BA%8C)Hooks/" class="article-date">
@@ -127,7 +191,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/24/React%E7%B3%BB%E5%88%97(%E4%BA%8C)Hooks/" data-id="ckqbhr8k20009prw66rfb5izu" data-title="React系列(二)Hooks" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/24/React%E7%B3%BB%E5%88%97(%E4%BA%8C)Hooks/" data-id="ckqdwefhv0007c8w64qdybhk8" data-title="React系列(二)Hooks" class="article-share-link">Share</a>
       
       
       
@@ -205,7 +269,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/24/JS%E7%B3%BB%E5%88%97(%E4%B8%89)DOM%E3%80%81%E4%BA%8B%E4%BB%B6%E5%8F%8A%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/" data-id="ckqbhr8jt0001prw6g09k8jtl" data-title="JS系列(三)DOM、事件及防抖节流" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/24/JS%E7%B3%BB%E5%88%97(%E4%B8%89)DOM%E3%80%81%E4%BA%8B%E4%BB%B6%E5%8F%8A%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/" data-id="ckqdwefhq0002c8w66azbdti9" data-title="JS系列(三)DOM、事件及防抖节流" class="article-share-link">Share</a>
       
       
       
@@ -307,7 +371,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/20/React%E7%B3%BB%E5%88%97(%E4%B8%80)JSX%E3%80%81%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" data-id="ckqbhr8jz0005prw6gwyua0kk" data-title="React系列(一)JSX、组件的生命周期与数据流" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/20/React%E7%B3%BB%E5%88%97(%E4%B8%80)JSX%E3%80%81%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" data-id="ckqdwefhp0001c8w6e0za3hfy" data-title="React系列(一)JSX、组件的生命周期与数据流" class="article-share-link">Share</a>
       
       
       
@@ -429,7 +493,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/19/JS%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E7%BA%BF%E6%80%A7%E8%A1%A8/" data-id="ckqbhr8jy0004prw6fqvlezsp" data-title="JS数据结构与算法-线性表" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/19/JS%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E7%BA%BF%E6%80%A7%E8%A1%A8/" data-id="ckqdwefhj0000c8w697zs9l44" data-title="JS数据结构与算法-线性表" class="article-share-link">Share</a>
       
       
       
@@ -501,7 +565,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/11/%E6%AF%95%E8%AE%BEblog/" data-id="ckqbhr8k10008prw684pqenzn" data-title="毕设blog" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/11/%E6%AF%95%E8%AE%BEblog/" data-id="ckqdwefi4000bc8w6g5o2gv7q" data-title="毕设blog" class="article-share-link">Share</a>
       
       
       
@@ -546,7 +610,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/07/JS%E7%B3%BB%E5%88%97(%E4%BA%8C)%E5%BC%82%E6%AD%A5/" data-id="ckqbhr8jw0003prw61fqvfvpy" data-title="JS系列(二)异步" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/07/JS%E7%B3%BB%E5%88%97(%E4%BA%8C)%E5%BC%82%E6%AD%A5/" data-id="ckqdwefhs0004c8w692rkd22a" data-title="JS系列(二)异步" class="article-share-link">Share</a>
       
       
       
@@ -619,7 +683,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/06/JS%E7%B3%BB%E5%88%97(%E4%B8%80)%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83/" data-id="ckqbhr8jp0000prw65gd86902" data-title="JS系列(一)执行环境" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/06/JS%E7%B3%BB%E5%88%97(%E4%B8%80)%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83/" data-id="ckqdwefhr0003c8w6cldabh2e" data-title="JS系列(一)执行环境" class="article-share-link">Share</a>
       
       
       
@@ -684,7 +748,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/03/%E5%88%9D%E8%A7%81%E6%B5%8F%E8%A7%88%E5%99%A8/" data-id="ckqbhr8k3000aprw67u0tam8y" data-title="初见浏览器" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/03/%E5%88%9D%E8%A7%81%E6%B5%8F%E8%A7%88%E5%99%A8/" data-id="ckqdwefi20009c8w60in44144" data-title="初见浏览器" class="article-share-link">Share</a>
       
       
       
@@ -736,7 +800,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/06/03/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" data-id="ckqbhr8k00007prw6663p5tv7" data-title="博客搭建" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/06/03/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" data-id="ckqdwefi2000ac8w6bvdb2wqx" data-title="博客搭建" class="article-share-link">Share</a>
       
       
       
@@ -793,6 +857,10 @@
       <ul>
         
           <li>
+            <a href="/2021/06/26/React%E7%B3%BB%E5%88%97(%E4%B8%89)%E8%99%9A%E6%8B%9FDOM%E5%8F%8A%E6%A0%88%E8%B0%83%E5%92%8C/">React系列(三)虚拟DOM及栈调和</a>
+          </li>
+        
+          <li>
             <a href="/2021/06/24/React%E7%B3%BB%E5%88%97(%E4%BA%8C)Hooks/">React系列(二)Hooks</a>
           </li>
         
@@ -806,10 +874,6 @@
         
           <li>
             <a href="/2021/06/19/JS%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E7%BA%BF%E6%80%A7%E8%A1%A8/">JS数据结构与算法-线性表</a>
-          </li>
-        
-          <li>
-            <a href="/2021/06/11/%E6%AF%95%E8%AE%BEblog/">毕设blog</a>
           </li>
         
       </ul>
